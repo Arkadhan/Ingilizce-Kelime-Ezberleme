@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbwordnewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblengWord">
+          <Key>
+            <PropertyRef Name="engID" />
+          </Key>
+          <Property Name="engID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="engWord" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="engSentences" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblLearning">
+          <Key>
+            <PropertyRef Name="learnID" />
+          </Key>
+          <Property Name="learnID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="trID" Type="int" Nullable="false" />
+          <Property Name="engID" Type="int" Nullable="false" />
+          <Property Name="yesterday" Type="bit" Nullable="false" />
+          <Property Name="lastWeek" Type="bit" Nullable="false" />
+          <Property Name="lastMonth" Type="bit" Nullable="false" />
+          <Property Name="sixMonthsLater" Type="bit" Nullable="false" />
+          <Property Name="learned" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbltrWord">
+          <Key>
+            <PropertyRef Name="trID" />
+          </Key>
+          <Property Name="trID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="trWord" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="trSentences" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_tblLearning_tblengWord">
+          <End Role="tblengWord" Type="Self.tblengWord" Multiplicity="1" />
+          <End Role="tblLearning" Type="Self.tblLearning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblengWord">
+              <PropertyRef Name="engID" />
+            </Principal>
+            <Dependent Role="tblLearning">
+              <PropertyRef Name="engID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLearning_tbltrWord">
+          <End Role="tbltrWord" Type="Self.tbltrWord" Multiplicity="1" />
+          <End Role="tblLearning" Type="Self.tblLearning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbltrWord">
+              <PropertyRef Name="trID" />
+            </Principal>
+            <Dependent Role="tblLearning">
+              <PropertyRef Name="trID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbwordnewModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblengWord" EntityType="Self.tblengWord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLearning" EntityType="Self.tblLearning" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbltrWord" EntityType="Self.tbltrWord" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblLearning_tblengWord" Association="Self.FK_tblLearning_tblengWord">
+            <End Role="tblengWord" EntitySet="tblengWord" />
+            <End Role="tblLearning" EntitySet="tblLearning" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLearning_tbltrWord" Association="Self.FK_tblLearning_tbltrWord">
+            <End Role="tbltrWord" EntitySet="tbltrWord" />
+            <End Role="tblLearning" EntitySet="tblLearning" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbwordnewModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblengWord">
+          <Key>
+            <PropertyRef Name="engID" />
+          </Key>
+          <Property Name="engID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="engWord" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="engSentences" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblLearnings" Relationship="Self.FK_tblLearning_tblengWord" FromRole="tblengWord" ToRole="tblLearning" />
+        </EntityType>
+        <EntityType Name="tblLearning">
+          <Key>
+            <PropertyRef Name="learnID" />
+          </Key>
+          <Property Name="learnID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="trID" Type="Int32" Nullable="false" />
+          <Property Name="engID" Type="Int32" Nullable="false" />
+          <Property Name="yesterday" Type="Boolean" Nullable="false" />
+          <Property Name="lastWeek" Type="Boolean" Nullable="false" />
+          <Property Name="lastMonth" Type="Boolean" Nullable="false" />
+          <Property Name="sixMonthsLater" Type="Boolean" Nullable="false" />
+          <Property Name="learned" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblengWord" Relationship="Self.FK_tblLearning_tblengWord" FromRole="tblLearning" ToRole="tblengWord" />
+          <NavigationProperty Name="tbltrWord" Relationship="Self.FK_tblLearning_tbltrWord" FromRole="tblLearning" ToRole="tbltrWord" />
+        </EntityType>
+        <EntityType Name="tbltrWord">
+          <Key>
+            <PropertyRef Name="trID" />
+          </Key>
+          <Property Name="trID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="trWord" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="trSentences" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblLearnings" Relationship="Self.FK_tblLearning_tbltrWord" FromRole="tbltrWord" ToRole="tblLearning" />
+        </EntityType>
+        <Association Name="FK_tblLearning_tblengWord">
+          <End Role="tblengWord" Type="Self.tblengWord" Multiplicity="1" />
+          <End Role="tblLearning" Type="Self.tblLearning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblengWord">
+              <PropertyRef Name="engID" />
+            </Principal>
+            <Dependent Role="tblLearning">
+              <PropertyRef Name="engID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLearning_tbltrWord">
+          <End Role="tbltrWord" Type="Self.tbltrWord" Multiplicity="1" />
+          <End Role="tblLearning" Type="Self.tblLearning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbltrWord">
+              <PropertyRef Name="trID" />
+            </Principal>
+            <Dependent Role="tblLearning">
+              <PropertyRef Name="trID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbwordnewEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tblengWords" EntityType="Self.tblengWord" />
+          <EntitySet Name="tblLearnings" EntityType="Self.tblLearning" />
+          <EntitySet Name="tbltrWords" EntityType="Self.tbltrWord" />
+          <AssociationSet Name="FK_tblLearning_tblengWord" Association="Self.FK_tblLearning_tblengWord">
+            <End Role="tblengWord" EntitySet="tblengWords" />
+            <End Role="tblLearning" EntitySet="tblLearnings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLearning_tbltrWord" Association="Self.FK_tblLearning_tbltrWord">
+            <End Role="tbltrWord" EntitySet="tbltrWords" />
+            <End Role="tblLearning" EntitySet="tblLearnings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbwordnewModelStoreContainer" CdmEntityContainer="dbwordnewEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="dbwordnewModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblengWords">
+            <EntityTypeMapping TypeName="dbwordnewModel.tblengWord">
+              <MappingFragment StoreEntitySet="tblengWord">
+                <ScalarProperty Name="engID" ColumnName="engID" />
+                <ScalarProperty Name="engWord" ColumnName="engWord" />
+                <ScalarProperty Name="engSentences" ColumnName="engSentences" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLearnings">
+            <EntityTypeMapping TypeName="dbwordnewModel.tblLearning">
+              <MappingFragment StoreEntitySet="tblLearning">
+                <ScalarProperty Name="learnID" ColumnName="learnID" />
+                <ScalarProperty Name="trID" ColumnName="trID" />
+                <ScalarProperty Name="engID" ColumnName="engID" />
+                <ScalarProperty Name="yesterday" ColumnName="yesterday" />
+                <ScalarProperty Name="lastWeek" ColumnName="lastWeek" />
+                <ScalarProperty Name="lastMonth" ColumnName="lastMonth" />
+                <ScalarProperty Name="sixMonthsLater" ColumnName="sixMonthsLater" />
+                <ScalarProperty Name="learned" ColumnName="learned" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbltrWords">
+            <EntityTypeMapping TypeName="dbwordnewModel.tbltrWord">
+              <MappingFragment StoreEntitySet="tbltrWord">
+                <ScalarProperty Name="trID" ColumnName="trID" />
+                <ScalarProperty Name="trWord" ColumnName="trWord" />
+                <ScalarProperty Name="trSentences" ColumnName="trSentences" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

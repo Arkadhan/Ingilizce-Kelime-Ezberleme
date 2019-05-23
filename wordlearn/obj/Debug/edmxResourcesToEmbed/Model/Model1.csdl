@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbwordnewModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblengWord">
+    <Key>
+      <PropertyRef Name="engID" />
+    </Key>
+    <Property Name="engID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="engWord" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="engSentences" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblLearnings" Relationship="Self.FK_tblLearning_tblengWord" FromRole="tblengWord" ToRole="tblLearning" />
+  </EntityType>
+  <EntityType Name="tblLearning">
+    <Key>
+      <PropertyRef Name="learnID" />
+    </Key>
+    <Property Name="learnID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="trID" Type="Int32" Nullable="false" />
+    <Property Name="engID" Type="Int32" Nullable="false" />
+    <Property Name="yesterday" Type="Boolean" Nullable="false" />
+    <Property Name="lastWeek" Type="Boolean" Nullable="false" />
+    <Property Name="lastMonth" Type="Boolean" Nullable="false" />
+    <Property Name="sixMonthsLater" Type="Boolean" Nullable="false" />
+    <Property Name="learned" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tblengWord" Relationship="Self.FK_tblLearning_tblengWord" FromRole="tblLearning" ToRole="tblengWord" />
+    <NavigationProperty Name="tbltrWord" Relationship="Self.FK_tblLearning_tbltrWord" FromRole="tblLearning" ToRole="tbltrWord" />
+  </EntityType>
+  <EntityType Name="tbltrWord">
+    <Key>
+      <PropertyRef Name="trID" />
+    </Key>
+    <Property Name="trID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="trWord" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="trSentences" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblLearnings" Relationship="Self.FK_tblLearning_tbltrWord" FromRole="tbltrWord" ToRole="tblLearning" />
+  </EntityType>
+  <Association Name="FK_tblLearning_tblengWord">
+    <End Role="tblengWord" Type="Self.tblengWord" Multiplicity="1" />
+    <End Role="tblLearning" Type="Self.tblLearning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblengWord">
+        <PropertyRef Name="engID" />
+      </Principal>
+      <Dependent Role="tblLearning">
+        <PropertyRef Name="engID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblLearning_tbltrWord">
+    <End Role="tbltrWord" Type="Self.tbltrWord" Multiplicity="1" />
+    <End Role="tblLearning" Type="Self.tblLearning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbltrWord">
+        <PropertyRef Name="trID" />
+      </Principal>
+      <Dependent Role="tblLearning">
+        <PropertyRef Name="trID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbwordnewEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="tblengWords" EntityType="Self.tblengWord" />
+    <EntitySet Name="tblLearnings" EntityType="Self.tblLearning" />
+    <EntitySet Name="tbltrWords" EntityType="Self.tbltrWord" />
+    <AssociationSet Name="FK_tblLearning_tblengWord" Association="Self.FK_tblLearning_tblengWord">
+      <End Role="tblengWord" EntitySet="tblengWords" />
+      <End Role="tblLearning" EntitySet="tblLearnings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblLearning_tbltrWord" Association="Self.FK_tblLearning_tbltrWord">
+      <End Role="tbltrWord" EntitySet="tbltrWords" />
+      <End Role="tblLearning" EntitySet="tblLearnings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
