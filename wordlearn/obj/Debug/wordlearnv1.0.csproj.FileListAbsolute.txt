@@ -11,10 +11,11 @@ C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearnv1.0.csproj.Cor
 C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearnv1.0.csproj.CopyComplete
 C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearn.exe
 C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearn.pdb
-C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearn.Form1.resources
 C:\Users\Mgm\source\repos\wordlearn\wordlearn\bin\Debug\EntityFramework.dll
 C:\Users\Mgm\source\repos\wordlearn\wordlearn\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Mgm\source\repos\wordlearn\wordlearn\bin\Debug\EntityFramework.xml
 C:\Users\Mgm\source\repos\wordlearn\wordlearn\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Mgm\source\repos\wordlearn\wordlearn\bin\Debug\Control.Draggable.dll
-C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearn.Form2.resources
+C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearn.wordadd.resources
+C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearn.statistics.resources
+C:\Users\Mgm\source\repos\wordlearn\wordlearn\obj\Debug\wordlearn.mainForm.resources

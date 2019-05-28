@@ -85,5 +85,26 @@ namespace wordlearn.Control
              */
             
         }
+        public static bool AddWord(string trWord, string trSentences, string enWord, string enSentences)
+        {
+            if (!string.IsNullOrEmpty(trWord))
+            {
+                Model.tbltrWord yeniTrWord = new Model.tbltrWord();
+                yeniTrWord.trWord = trWord;
+                yeniTrWord.trSentences = trSentences;
+
+                Model.tblengWord yeniEngWord = new Model.tblengWord();
+                yeniEngWord.engWord = enWord;
+                yeniEngWord.engSentences = enSentences;
+
+                OrtakDb.db.tbltrWords.Add(yeniTrWord);
+                OrtakDb.db.tblengWords.Add(yeniEngWord);
+                OrtakDb.db.SaveChanges();
+                return true;
+            }
+            return false;
+
+
+        }
     }
 }
